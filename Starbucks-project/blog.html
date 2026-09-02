@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Starbucks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #050505;
+  color: white;
+  overflow-x: hidden;
+}
+
+
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 20%, #81c494, transparent 40%),
+    radial-gradient(circle at 90% 80%, #81c494, transparent 40%);
+  z-index: -1;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .header {
+    padding: 20px 40px;
+  }
+  nav {
+    gap: 25px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 15px 20px;
+  }
+  nav {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+    .hero{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      min-height:90vh;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .hero-text{
+      padding:80px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hero-text h2{
+      font-size:52px;
+      margin-bottom:25px;
+    }
+
+    .hero-text p{
+      font-size:20px;
+      line-height:1.6;
+      margin-bottom:30px;
+    }
+
+    .hero-text button{
+      width:200px;
+      padding:14px;
+      border:none;
+      background:#224c3c;
+      color:white;
+      font-size:16px;
+      border-radius:25px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .hero-text button:hover{
+      background:#005c3b;
+    }
+
+    .hero-img{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-img img{
+      width:80%;
+      max-width:450px;
+      border-radius:20px;
+      box-shadow:0 20px 50px rgba(0,0,0,0.15);
+    }
+
+    .section{
+      padding:90px 8%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:60px;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .section img{
+      width:100%;
+      border-radius:20px;
+    }
+
+    .section h3{
+      font-size:38px;
+      margin-bottom:20px;
+    }
+
+    .section p{
+      font-size:18px;
+      line-height:1.6;
+      margin-bottom:25px;
+    }
+
+    .section button{
+      width:200px;
+      padding:14px;
+      border:none;
+      background:#224c3c;
+      color:white;
+      font-size:16px;
+      border-radius:25px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .section button:hover{
+      background:#005c3b;
+      color:white;
+    }
+
+    footer{
+      background:#f1f8f6;
+      text-align:center;
+      padding:35px;
+      font-size:15px;
+      margin-top:60px;
+    }
+
+   
+    .modal{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .modal-content{
+      padding:40px;
+      width:400px;
+      border-radius:20px;
+      text-align:center;
+      animation:pop .3s ease;
+      position:relative;
+      max-height:80vh;
+      overflow-y:auto;
+      background: radial-gradient(circle at top left, #364138, #0b421a, #2f4738);
+    }
+
+    
+
+    .modal-content h2{
+      margin-bottom:20px;
+    }
+
+    .modal-content input{
+      width:300px;
+      padding:14px;
+      border:none;
+      background:#ffffff;
+      color:white;
+      font-size:16px;
+      border-radius:5px;
+      cursor:pointer;
+      transition:.3s;
+      margin: 10px;
+    }
+
+    .order-btn{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:25px;
+      background:#4b7f6c;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .close{
+      position:absolute;
+      right:15px;
+      top:10px;
+      font-size:28px;
+      cursor:pointer;
+    }
+
+    .fade-text {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      margin-bottom: 12px;
+      text-align:left;
+    }
+
+    .fade-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    .desserts-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dessert-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      margin-bottom: 20px;
+    }
+
+    .dessert-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dessert-item img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 8px;
+      box-shadow: 0 8px 20px rgba(177, 155, 155, 0.15);
+    }
+
+    .dessert-item p {
+      color: #ffffff; 
+      font-weight: 600;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    @media(max-width:900px){
+      .hero, .section{
+        grid-template-columns:1fr;
+      }
+      .hero-text{
+        padding:50px 25px;
+      }
+    }
+
+.logo {
+  width: 80px;
+  z-index: 2;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 15px 60px; 
+  background: transparent;
+}
+
+
+nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+  font-family: 'Quattrocento';
+}
+
+nav a {
+  font-family:'Quattrocento';
+  text-decoration: none;
+  color: #cfcfcf;
+  font-weight: 400;
+  position: relative;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: white;
+  transform: scale(1.05);
+}
+nav a:hover,
+nav a.active {
+  color: rgb(121, 187, 159);
+}
+.cin{
+  font-family: 'Cinzel';
+}
+.quat{
+  font-family: 'Quattrocento';
+}
+
+  </style>
+</head>
+<body>
+<div class="bg-gradient"></div>
+<header>
+</header>
+<header class="header">
+  <img src="starbucks logo.png" alt="Starbucks Logo" class="logo">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="about.html">About</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h2 class="cin">New Caramel Protein Latte</h2>
+    <p class="quat"> 
+      Power up with a new Caramel Protein Latte or Matcha, 
+      with protein-boosted milk for up to 31g of protein per grande. 
+      Add Caramel Protein Cold Foam for up to an additional 17g of protein.
+      Hot or iced. Sugar-free options.
+    </p>
+    <button onclick="openOrder()" class="quat">Order now</button>
+  </div>
+
+  <div class="hero-img">
+    <img src="WhatsApp Image 2026-01-23 at 08.44.00.jpeg" alt="Matcha Latte">
+  </div>
+</section>
+
+<section class="section">
+  <img src="WhatsApp Image 2026-01-23 at 08.44.23.jpeg" alt="Coffee">
+  <div>
+    <h3 class="cin">Freshly Brewed</h3>
+    <p class="quat">We brew our coffee fresh every day using premium beans.</p>
+    <button class="quat">Learn more</button>
+  </div>
+</section>
+
+<section class="section">
+  <div>
+    <h3 class="cin">Delicious Desserts</h3>
+    <p class="quat">Enjoy our fresh desserts baked daily.</p>
+    <button class="quat">View menu</button>
+  </div>
+  <img src="WhatsApp Image 2026-01-23 at 08.44.41.jpeg" alt="Desserts">
+</section>
+
+
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeOrder()">&times;</span>
+    <h2 class="cin">Place Order</h2>
+    <input type="text" placeholder="Your name">
+    <input type="text" placeholder="Drink name">
+    <input type="number" placeholder="Quantity">
+    <button class="order-btn quat">Order</button>
+  </div>
+</div>
+
+<div id="learnMoreModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeLearnMore()">&times;</span>
+    <h2>Discover Starbucks</h2>
+    <div class="learn-more-text">
+      <p class="fade-text">1. Starbucks is committed to ethically sourcing the finest coffee beans from around the world.</p>
+      <p class="fade-text">2. Every cup is freshly brewed to ensure maximum flavor and aroma.</p>
+      <p class="fade-text">3. Enjoy seasonal drinks like Pumpkin Spice Latte or limited edition Frappuccinos.</p>
+      <p class="fade-text">4. Starbucks stores provide a cozy environment to relax, work, or meet friends.</p>
+      <p class="fade-text">5. Try our exclusive protein lattes and sugar-free options for a healthy boost.</p>
+      <p class="fade-text">6. Customize your drink with alternative milks, syrups, and toppings to make it truly yours.</p>
+      <p class="fade-text">7. Starbucks Rewards members enjoy free drinks, discounts, and exclusive perks.</p>
+      <p class="fade-text">8. Join us in sustainability initiatives, from reusable cups to eco-friendly packaging.</p>
+      <p class="fade-text">9. Our desserts and snacks are freshly baked daily to complement your coffee.</p>
+      <p class="fade-text">10. Experience the world’s favorite coffeehouse, with over 30,000 stores globally!</p>
+    </div>
+  </div>
+</div>
+
+<div id="dessertsModal" class="modal">
+  <div class="des-background"></div>
+  <div class="modal-content">
+    <span class="close" onclick="closeDesserts()">&times;</span>
+    <h2 class="quat">Our Delicious Desserts</h2>
+    <div class="desserts-list">
+      <div class="dessert-item">
+        <img src="WhatsApp Image 2026-01-23 at 09.39.54.jpeg" alt="Cheesecake">
+        <p class="quat">Cheesecake</p>
+      </div>
+      <div class="dessert-item">
+        <img src="WhatsApp Image 2026-01-23 at 09.39.45.jpeg" alt="Croissant">
+        <p class="quat">Croissant</p>
+      </div>
+      <div class="dessert-item">
+        <img src="WhatsApp Image 2026-01-23 at 09.39.36.jpeg" alt="Macaron">
+        <p class="quat">Macaron</p>
+      </div>
+      <div class="dessert-item">
+        <img src="WhatsApp Image 2026-01-23 at 09.39.28.jpeg" alt="Brownie">
+        <p class="quat">Brownie</p>
+      </div>
+      <div class="dessert-item">
+        <img src="WhatsApp Image 2026-01-23 at 09.40.09.jpeg" alt="Muffin">
+        <p class="quat">Muffin</p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function openOrder(){
+    document.getElementById("orderModal").style.display = "flex";
+  }
+
+  function closeOrder(){
+    document.getElementById("orderModal").style.display = "none";
+  }
+
+  function openLearnMore(){
+    const modal = document.getElementById("learnMoreModal");
+    modal.style.display = "flex";
+
+    const paragraphs = modal.querySelectorAll('.fade-text');
+    paragraphs.forEach((p, index) => {
+      setTimeout(() => {
+        p.classList.add('show');
+      }, index * 300);
+    });
+  }
+
+  function closeLearnMore(){
+    const modal = document.getElementById("learnMoreModal");
+    const paragraphs = modal.querySelectorAll('.fade-text');
+    paragraphs.forEach(p => p.classList.remove('show'));
+    modal.style.display = "none";
+  }
+
+
+  function openDesserts(){
+    const modal = document.getElementById("dessertsModal");
+    modal.style.display = "flex";
+
+    const items = modal.querySelectorAll('.dessert-item');
+    items.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('show');
+      }, index * 300);
+    });
+  }
+
+  function closeDesserts(){
+    const modal = document.getElementById("dessertsModal");
+    const items = modal.querySelectorAll('.dessert-item');
+    items.forEach(item => item.classList.remove('show'));
+    modal.style.display = "none";
+  }
+  
+  document.querySelectorAll('.section button')[0].addEventListener('click', openLearnMore);
+  document.querySelectorAll('.section button')[1].addEventListener('click', openDesserts);
+</script>
+
+</body>
+</html>

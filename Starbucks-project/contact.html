@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Starbucks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+  .locations{
+  padding:70px 10%;
+  text-align:center;
+}
+
+.locations h2{
+  font-size:36px;
+  margin-bottom:40px;
+  color:#ffffff;
+  font-family: 'Cinzel';
+}
+
+.location-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.location-card{
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.1);
+  cursor:pointer;
+  transition:.3s;
+}
+
+.location-card h3{
+  color:#00754a;
+  margin-bottom:10px;
+  font-family: 'Quattrocento';
+}
+
+.location-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.location-popup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.popup-content{
+  background:#fff;
+  padding:40px;
+  border-radius:16px;
+  width:320px;
+  text-align:center;
+  position:relative;
+}
+
+.popup-content h3{
+  color:#00754a;
+  margin-bottom:12px;
+}
+
+.popup-content p{
+  color:#555;
+  line-height:1.5;
+}
+
+.close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  cursor:pointer;
+  font-size:20px;
+  font-weight:bold;
+  color: #00754a;
+}
+nav a:hover,
+nav a.active {
+  color: rgb(121, 187, 159);
+}
+.video-bg {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.video-bg iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; 
+}
+</style>
+<body>
+
+<div class="bg-gradient"></div>
+
+<header class="header">
+    <img src="starbucks logo.png" alt="Starbucks Logo" class="logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+</header>
+
+<section class="locations">
+  <h2>Our Starbucks Locations in Kazakhstan</h2>
+  <div class="location-list">
+
+    <div class="location-card" onclick="showLocation('Almaty – MEGA Park', 'Almaty, MEGA Park Shopping Center. Phone: +7 (727) 123-4567')">
+      <h3>Almaty – MEGA Park</h3>
+    </div>
+
+    <div class="location-card" onclick="showLocation('Almaty – Kazakhmys', 'Almaty, Kazakhmys district. Phone: +7 (727) 234-5678')">
+      <h3>Almaty – Kazakhmys</h3>
+    </div>
+
+    <div class="location-card" onclick="showLocation('Astana – MEGA Silk Way', 'Astana, MEGA Silk Way Shopping Center. Phone: +7 (7172) 456-789')">
+      <h3>Astana – MEGA Silk Way</h3>
+    </div>
+
+    <div class="location-card" onclick="showLocation('Shymkent – Republic Ave', 'Shymkent, Republic Avenue. Phone: +7 (7252) 567-890')">
+      <h3>Shymkent – Republic Ave</h3>
+    </div>
+
+  </div>
+</section>
+
+<div class="location-popup" id="locationPopup">
+  <div class="popup-content">
+    <span class="close" onclick="closeLocation()">✖</span>
+    <h3 id="popupName">Location Name</h3>
+    <p id="popupDetails">Details about the location.</p>
+  </div>
+</div>
+
+<section class="video-bg">
+  <iframe
+    src="https://www.youtube.com/embed/qhz-5cgnI7Q?autoplay=1&mute=1&loop=1&playlist=qhz-5cgnI7Q&controls=0&showinfo=0&modestbranding=1&rel=0"
+    frameborder="0"
+    allow="autoplay; fullscreen"
+    allowfullscreen>
+  </iframe>
+</section>
+
+<script>
+  function showLocation(name, details){
+  const popup = document.getElementById('locationPopup');
+  const popupName = document.getElementById('popupName');
+  const popupDetails = document.getElementById('popupDetails');
+
+  popupName.innerText = name;
+  popupDetails.innerText = details;
+
+  popup.style.display = "flex";
+}
+
+function closeLocation(){
+  document.getElementById('locationPopup').style.display = "none";
+}
+</script>
+</body>
+</html>

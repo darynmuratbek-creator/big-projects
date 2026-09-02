@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #fff;
+      padding-top: 110px;
+    }
+
+    .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  background-color: white;
+}
+.logo-link {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 200px;
+  display: block;
+}
+nav a {
+  color: black;
+  font-weight: 700;
+  text-decoration: none;
+  z-index: 3;
+  position: relative;
+  font-size: 13px;
+}
+
+.logo, .icons img {
+  z-index: 3;
+  position: relative;
+}
+
+.icons img {
+  width: 25px;
+}
+
+.logo {
+  width: 200px;
+  position: absolute;
+  left: 50%;
+}
+
+.header.scrolled {
+  background: #fff;
+}
+
+
+.logo {
+  width: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+
+
+nav a:hover {
+    color: rgb(251, 114, 28);
+    transition: 0.2s;
+}
+
+
+.icons {
+  display: flex;
+  gap: 10px;
+}
+
+.icons img {
+  width: 25px;
+}
+
+    h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      position: relative;
+      height: 420px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.1));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      color: #fff;
+    }
+
+    .overlay h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .overlay p {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    .arrow {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .card:hover .arrow {
+      background: #fff;
+      color: #000;
+    }
+
+    @media (max-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer {
+    margin-top: 50px;
+  background: #000;
+  color: #fff;
+  padding: 80px 60px 40px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
+  gap: 60px;
+}
+
+.footer-col h4 {
+  font-size: 14px;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+.footer-col a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 15px;
+  opacity: 0.85;
+}
+
+.footer-col a:hover {
+  opacity: 1;
+}
+
+.newsletter h2 {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 40px;
+}
+
+
+.email span {
+  opacity: 0.8;
+}
+
+
+.footer-bottom {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.socials a {
+  margin-left: 18px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.socials a:hover {
+  opacity: 1;
+}
+
+
+
+
+.email {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 10px;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.email input {
+  background: none;
+  border: none;
+  color: #fff;
+  width: 100%;
+  font-size: 14px;
+  outline: none;
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.arrow-btn:hover {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.error-text {
+  margin-top: 8px;
+  font-size: 12px;
+  color: red;
+  display: none;
+}
+
+
+  </style>
+</head>
+
+<body>
+    <header class="header">
+
+  <a href="index.html" class="logo-link"><img src="Hamilton_Watch_Company_logo.png" alt="Hamilton Logo" class="logo"></a>
+
+  <nav>
+    <a href="#" class="nav-link" data-menu="menu-watches">WATCHES</a>
+    <a href="#" class="nav-link" data-menu="menu-collections">COLLECTIONS</a>
+    <a href="#" class="nav-link" data-menu="menu-straps">STRAPS</a>
+    <a href="#" class="nav-link" data-menu="menu-services">SERVICES</a>
+    <a href="#" class="nav-link" data-menu="menu-brand">THE BRAND</a>
+  </nav>
+
+  <div class="icons">
+    <img src="internet.png" class="icon-link" data-menu="menu-language" alt="Internet">
+    <img src="location.png" class="icon-link" data-menu="menu-location" alt="Location">
+    <img src="search-interface-symbol.png" class="icon-link" data-menu="menu-search" alt="Search">
+  </div>
+
+</header>
+
+
+  <h2>NEWS & STORIES</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <img src="news1.png" alt="zxcvb">
+      <div class="overlay">
+        <h3>TIMEPIECES OF THE WORLD</h3>
+        <p>Discover the Khaki Field Mechanical Special Editions inspired<br> by global cities.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news2.png" alt="">
+      <div class="overlay">
+        <h3>HAMILTON X CALL OF DUTY</h3>
+        <p>Hamilton teams up with Call of Duty to launch a special edition watch.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news3.png" alt="">
+      <div class="overlay">
+        <h3>14TH BEHIND THE CAMERA AWARDS</h3>
+        <p>Paying tribute to those who make<br> movie magic happen.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news4.png" alt="">
+      <div class="overlay">
+        <h3>SPLINTER CELL: DEATHWATCH</h3>
+        <p>Hamilton timepieces featured in<br> Netflix's animated series.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news5.png" alt="">
+      <div class="overlay">
+        <h3>STEP OUTSIDE</h3>
+        <p>Dive into the world of Hamilton Khaki and explore the Aviation, Field, and Navy collections, each inspired by the<br> elements of land, sea, and sky.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news6.png" alt="">
+      <div class="overlay">
+        <h3>KHAKI FIELD<br>AUTOMATIC</h3>
+        <p>Continuing a legacy of excellence in field watches, discover the Khaki Field Automatic.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news7.png" alt="">
+      <div class="overlay">
+        <h3>THE WATCHMAKER<br>OF FILMMAKERS</h3>
+        <p>On the silver screen since 1932. Prominently featured in more than 500 movies and television shows</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="news8.png" alt="">
+      <div class="overlay">
+        <h3>VENTURA<br>QUARTZ</h3>
+        <p>The original Ventura, launched in 1957, made watchmaking history as the<br> world's first electrical, battery powered watch.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <footer class="footer">
+  <div class="footer-top">
+
+    <div class="footer-col">
+      <h4>ABOUT US</h4>
+      <a href="#">Contact us</a>
+      <a href="#">About Hamilton</a>
+      <a href="#">Press Lounge</a>
+      <a href="#">Find a store</a>
+      <a href="#">Jobs</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>SUPPORT</h4>
+      <a href="#">Watch manuals</a>
+      <a href="#">Service prices</a>
+      <a href="#">Shopping guide</a>
+      <a href="#">FAQ</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>TERMS</h4>
+      <a href="#">Terms of use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Warranty</a>
+      <a href="#">Cookie settings</a>
+    </div>
+
+    <div class="footer-col newsletter">
+  <h2>Sign up for inspiring content, new releases and more.</h2>
+
+  <div class="email">
+    <input id="emailInput" type="email" placeholder="Email">
+    <button id="arrowBtn" class="arrow-btn">→</button>
+  </div>
+
+  <p class="error-text" id="errorText"></p>
+</div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>Copyright ©️ 2026 Hamilton International Ltd. All rights reserved.</p>
+
+    <div class="socials">
+      <a href="https://www.facebook.com/Hamiltonwatch">Facebook</a>
+      <a href="https://www.instagram.com/hamiltonwatch/">Instagram</a>
+      <a href="#">X</a>
+      <a href="https://www.pinterest.com/hamiltonwatch/">Pinterest</a>
+      <a href="https://www.youtube.com/user/hamiltonwatch">Youtube</a>
+      <a href="https://www.linkedin.com/company/hamilton-international-ltd/">LinkedIn</a>
+      <a href="https://www.hamiltonwatch.com/?srsltid=AfmBOoq8R04LTMnqOiaEFZ4TYCmDG8vCrV2nW2RfChSDNBqfc5KrcCrO">Wechat</a>
+      <a href="https://www.hamiltonwatch.com/?srsltid=AfmBOoq8R04LTMnqOiaEFZ4TYCmDG8vCrV2nW2RfChSDNBqfc5KrcCrO">Weibo</a>
+      <a href="https://page.line.me/862myyxh?openQrModal=true">Line</a>
+      <a href="https://www.tiktok.com/@hamiltonwatch">Tiktok</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
