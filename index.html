@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyageur</title>
+
+    <!-- Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="goToPage('home')">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">Voyageur</span>
+            </div>
+
+            <div class="nav-links">
+                <button onclick="goToPage('home')" class="nav-btn">Home</button>
+                <button onclick="goToPage('guides')" class="nav-btn">Travel Guides</button>
+                <button onclick="goToPage('about')" class="nav-btn">About</button>
+                <button onclick="goToPage('bookings')" class="nav-btn">
+                    My Trips
+                    <span class="nav-badge" id="booking-count">0</span>
+                </button>
+                <button onclick="openAuthModal()" class="auth-btn">
+                    <i class="fas fa-user"></i> <span id="auth-label">Login</span>
+                </button>
+                <button onclick="toggleTheme()" class="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════ HOME PAGE ═══════════════════════ -->
+    <div id="home-page" class="page">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg">
+                <div class="hero-bg-img"></div>
+                <div class="hero-overlay"></div>
+                <div class="hero-grain"></div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-eyebrow">
+                    <span class="eyebrow-line"></span>
+                    <span>Est. 2024 · World Class Travel</span>
+                    <span class="eyebrow-line"></span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-serif">The World</span>
+                    <span class="title-italic">Awaits</span>
+                    <span class="title-serif">You</span>
+                </h1>
+                <p class="hero-sub">Curated journeys for the discerning traveler. Discover destinations that transform perspectives.</p>
+                <div class="hero-cta">
+                    <button onclick="scrollToMap()" class="btn-gold">
+                        <span>Explore Destinations</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button onclick="goToPage('guides')" class="btn-ghost">
+                        <span>Read Travel Guides</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hs-num">20<sup>+</sup></span>
+                    <span class="hs-label">Countries</span>
+                </div>
+                <div class="hs-divider"></div>
+                <div class="hero-stat">
+                    <span class="hs-num">500<sup>+</sup></span>
+                    <span class="hs-label">Curated Hotels</span>
+                </div>
+                <div class="hs-divider"></div>
+                <div class="hero-stat">
+                    <span class="hs-num">50K<sup>+</sup></span>
+                    <span class="hs-label">Happy Travelers</span>
+                </div>
+            </div>
+
+            <div class="hero-scroll">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- Marquee strip -->
+        <div class="marquee-strip">
+            <div class="marquee-inner">
+                <span>Japan ·</span><span>France ·</span><span>Italy ·</span><span>Maldives ·</span>
+                <span>Morocco ·</span><span>Brazil ·</span><span>Australia ·</span><span>New Zealand ·</span>
+                <span>Thailand ·</span><span>Greece ·</span><span>Iceland ·</span><span>Peru ·</span>
+                <span>Japan ·</span><span>France ·</span><span>Italy ·</span><span>Maldives ·</span>
+                <span>Morocco ·</span><span>Brazil ·</span><span>Australia ·</span><span>New Zealand ·</span>
+            </div>
+        </div>
+
+        <!-- Editorial Intro -->
+        <section class="editorial-intro">
+            <div class="editorial-grid">
+                <div class="editorial-text">
+                    <p class="overline">Our Philosophy</p>
+                    <h2>Travel is not just a<br><em>destination</em> — it's a<br>transformation.</h2>
+                    <p class="body-text">We believe every journey should be as extraordinary as its destination. Voyageur handpicks the finest hotels, hidden gems, and unforgettable experiences for travelers who demand more than the ordinary.</p>
+                    <button onclick="goToPage('about')" class="btn-text-link">
+                        Learn our story <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="editorial-images">
+                    <div class="ed-img-large">
+                        <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600" alt="Travel">
+                        <div class="ed-img-caption">Santorini, Greece</div>
+                    </div>
+                    <div class="ed-img-stack">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400" alt="Japan">
+                        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=400" alt="India">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section" id="map-section">
+            <div class="section-header-luxury">
+                <p class="overline">Interactive</p>
+                <h2>World Map</h2>
+                <p class="sec-sub">Click any destination to discover hotels, cities & experiences</p>
+            </div>
+
+            <div class="filter-bar">
+                <button onclick="filterCountries('all')" class="filter-btn active" data-filter="all">All Regions</button>
+                <button onclick="filterCountries('europe')" class="filter-btn" data-filter="europe">Europe</button>
+                <button onclick="filterCountries('asia')" class="filter-btn" data-filter="asia">Asia</button>
+                <button onclick="filterCountries('americas')" class="filter-btn" data-filter="americas">Americas</button>
+                <button onclick="filterCountries('africa')" class="filter-btn" data-filter="africa">Africa</button>
+                <button onclick="filterCountries('oceania')" class="filter-btn" data-filter="oceania">Oceania</button>
+            </div>
+
+            <div class="map-container">
+                <div id="world-map"></div>
+                <div class="map-loading" id="map-loading">
+                    <div class="spinner"></div>
+                    <p>Charting the world...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Destinations Grid -->
+        <section class="destinations-section">
+            <div class="dest-header">
+                <div>
+                    <p class="overline">Handpicked</p>
+                    <h2>Popular Destinations</h2>
+                </div>
+                <button onclick="scrollToMap()" class="btn-text-link">View all on map <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="destinations-grid" id="countries-grid"></div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="process-section">
+            <div class="process-inner">
+                <div class="process-header">
+                    <p class="overline">Simple & Seamless</p>
+                    <h2>Plan Your Journey in<br>Three Steps</h2>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step reveal">
+                        <div class="ps-number">01</div>
+                        <div class="ps-icon"><i class="fas fa-globe"></i></div>
+                        <h3>Choose Destination</h3>
+                        <p>Explore our curated world map and select the destination that calls to your soul</p>
+                    </div>
+                    <div class="ps-connector"></div>
+                    <div class="process-step reveal">
+                        <div class="ps-number">02</div>
+                        <div class="ps-icon"><i class="fas fa-concierge-bell"></i></div>
+                        <h3>Select Your Stay</h3>
+                        <p>Browse our hand-vetted collection of luxury hotels, boutique stays and unique properties</p>
+                    </div>
+                    <div class="ps-connector"></div>
+                    <div class="process-step reveal">
+                        <div class="ps-number">03</div>
+                        <div class="ps-icon"><i class="fas fa-paper-plane"></i></div>
+                        <h3>Begin the Journey</h3>
+                        <p>Confirm your booking and prepare for an experience that will redefine your world</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Split -->
+        <section class="features-split">
+            <div class="features-img-col">
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800" alt="Luxury Travel">
+                <div class="features-img-badge">
+                    <span class="badge-num">98%</span>
+                    <span class="badge-text">Customer<br>Satisfaction</span>
+                </div>
+            </div>
+            <div class="features-text-col">
+                <p class="overline">Why Choose Voyageur</p>
+                <h2>The Art of<br><em>Effortless</em> Travel</h2>
+                <p class="body-text">Every detail matters. From the moment you begin planning to the moment you return home, we ensure your experience is nothing short of extraordinary.</p>
+                <ul class="luxury-feature-list">
+                    <li class="reveal">
+                        <div class="lfl-icon"><i class="fas fa-gem"></i></div>
+                        <div>
+                            <strong>Best Price Guarantee</strong>
+                            <p>We match any price or refund the difference, no questions asked</p>
+                        </div>
+                    </li>
+                    <li class="reveal">
+                        <div class="lfl-icon"><i class="fas fa-star"></i></div>
+                        <div>
+                            <strong>Personally Vetted Properties</strong>
+                            <p>Every hotel on our platform is inspected by our travel experts</p>
+                        </div>
+                    </li>
+                    <li class="reveal">
+                        <div class="lfl-icon"><i class="fas fa-headset"></i></div>
+                        <div>
+                            <strong>24/7 Concierge Support</strong>
+                            <p>Reach a real human travel expert any time, from anywhere</p>
+                        </div>
+                    </li>
+                    <li class="reveal">
+                        <div class="lfl-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <strong>Free Flexible Cancellation</strong>
+                            <p>Plans change. Cancel up to 24 hours before arrival at no charge</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <div class="section-header-luxury">
+                <p class="overline">Voices of Experience</p>
+                <h2>What Our Travelers Say</h2>
+            </div>
+            <div class="testimonials-track">
+                <div class="testimonial-card reveal">
+                    <div class="tc-quote">"</div>
+                    <p>"The hotel recommendations were impeccable. Our Bali villa exceeded every expectation — pure paradise."</p>
+                    <div class="tc-stars">★★★★★</div>
+                    <div class="tc-author">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=sarah2024" alt="Sarah">
+                        <div>
+                            <strong>Sarah Johnson</strong>
+                            <span>Traveled to Bali, Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="tc-quote">"</div>
+                    <p>"Booked my entire Japan trip in minutes. The itinerary suggestions were spot-on for a first-time visitor."</p>
+                    <div class="tc-stars">★★★★★</div>
+                    <div class="tc-author">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=mikec" alt="Mike">
+                        <div>
+                            <strong>Mike Chen</strong>
+                            <span>Traveled to Tokyo, Japan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="tc-quote">"</div>
+                    <p>"Europe has never felt so effortless. The curated hotel selection across France and Italy was extraordinary."</p>
+                    <div class="tc-stars">★★★★★</div>
+                    <div class="tc-author">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=emma99" alt="Emma">
+                        <div>
+                            <strong>Emma Wilson</strong>
+                            <span>Traveled across Europe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="tc-quote">"</div>
+                    <p>"As a solo female traveler, I needed reliable recommendations. Voyageur delivered on every promise."</p>
+                    <div class="tc-stars">★★★★★</div>
+                    <div class="tc-author">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=priya" alt="Priya">
+                        <div>
+                            <strong>Priya Sharma</strong>
+                            <span>Traveled to Morocco</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter-section">
+            <div class="newsletter-inner">
+                <div class="nl-text">
+                    <p class="overline" style="color:rgba(212,175,55,0.8)">Stay Inspired</p>
+                    <h2>Get Travel Inspiration<br>in Your Inbox</h2>
+                    <p>Exclusive deals, hidden destinations, and insider tips — delivered weekly.</p>
+                </div>
+                <div class="nl-form">
+                    <div class="subscribe-row">
+                        <input type="email" placeholder="your@email.com" id="email-input">
+                        <button onclick="subscribe()" class="btn-gold">Subscribe</button>
+                    </div>
+                    <p class="nl-note">No spam, ever. Unsubscribe anytime.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">◈ Voyageur</div>
+                    <p>Your trusted companion for<br>extraordinary journeys since 2024.</p>
+                    <div class="footer-socials">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-cols">
+                    <div class="footer-col">
+                        <h4>Destinations</h4>
+                        <a href="#">Europe</a>
+                        <a href="#">Asia</a>
+                        <a href="#">Americas</a>
+                        <a href="#">Africa</a>
+                        <a href="#">Oceania</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Discover</h4>
+                        <a href="#" onclick="goToPage('guides')">Travel Guides</a>
+                        <a href="#">Top Hotels</a>
+                        <a href="#">Hidden Gems</a>
+                        <a href="#">Seasonal Picks</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <a href="#" onclick="goToPage('about')">About Us</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Press</a>
+                        <a href="#">Contact</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Cancellations</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2024 Voyageur. All rights reserved.</span>
+                <span>Crafted with passion for exploration</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ═══════════════════════ COUNTRY PAGE ═══════════════════════ -->
+    <div id="country-page" class="page hidden">
+        <div class="country-hero-lux" id="country-hero">
+            <div class="country-hero-overlay"></div>
+            <button onclick="goToPage('home')" class="back-btn-lux">
+                <i class="fas fa-arrow-left"></i> <span>Back</span>
+            </button>
+            <div class="country-hero-content">
+                <p class="overline" style="color:rgba(212,175,55,0.9)">Destination</p>
+                <h1 id="country-name">Country Name</h1>
+                <div class="country-badges">
+                    <span class="cb"><i class="fas fa-star"></i> <span id="country-rating">0</span></span>
+                    <span class="cb"><i class="fas fa-users"></i> <span id="country-visitors">0</span>/year</span>
+                </div>
+            </div>
+            <div class="country-hero-scroll"></div>
+        </div>
+
+        <div class="country-content-wrap">
+            <!-- About -->
+            <section class="country-about">
+                <div class="ca-grid">
+                    <div class="ca-text">
+                        <p class="overline">About</p>
+                        <h2>The Destination</h2>
+                        <p id="country-description" class="description-text">Description...</p>
+                    </div>
+                    <div class="ca-stats">
+                        <div class="ca-stat">
+                            <i class="fas fa-temperature-high"></i>
+                            <span class="cas-val" id="weather">+25°C</span>
+                            <span class="cas-label">Climate</span>
+                        </div>
+                        <div class="ca-stat">
+                            <i class="fas fa-coins"></i>
+                            <span class="cas-val" id="budget">$100</span>
+                            <span class="cas-label">Per Day</span>
+                        </div>
+                        <div class="ca-stat">
+                            <i class="fas fa-clock"></i>
+                            <span class="cas-val" id="timezone">GMT+3</span>
+                            <span class="cas-label">Time Zone</span>
+                        </div>
+                        <div class="ca-stat">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="cas-val" id="safety">High</span>
+                            <span class="cas-label">Safety</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cities -->
+            <section class="country-section">
+                <div class="cs-header">
+                    <p class="overline">Explore</p>
+                    <h2>Top Cities</h2>
+                </div>
+                <div class="cities-grid" id="cities-grid"></div>
+            </section>
+
+            <!-- Hotels -->
+            <section class="country-section">
+                <div class="cs-header cs-header-row">
+                    <div>
+                        <p class="overline">Accommodation</p>
+                        <h2>Finest Hotels</h2>
+                    </div>
+                    <div class="sort-controls">
+                        <button onclick="sortHotels('price')" class="sort-btn">Price <i class="fas fa-sort"></i></button>
+                        <button onclick="sortHotels('rating')" class="sort-btn">Rating <i class="fas fa-sort"></i></button>
+                    </div>
+                </div>
+                <div class="hotels-grid" id="hotels-grid"></div>
+            </section>
+
+            <!-- Reviews -->
+            <section class="country-section">
+                <div class="cs-header">
+                    <p class="overline">Community</p>
+                    <h2>Traveler Reviews</h2>
+                </div>
+
+                <div class="review-form-box">
+                    <h3>Share Your Experience</h3>
+                    <div class="star-rating-input" id="star-input">
+                        <i class="far fa-star" onclick="setRating(1)"></i>
+                        <i class="far fa-star" onclick="setRating(2)"></i>
+                        <i class="far fa-star" onclick="setRating(3)"></i>
+                        <i class="far fa-star" onclick="setRating(4)"></i>
+                        <i class="far fa-star" onclick="setRating(5)"></i>
+                    </div>
+                    <textarea id="review-text" placeholder="Tell other travelers about your journey..."></textarea>
+                    <button onclick="submitReview()" class="btn-gold" style="align-self:flex-start">Submit Review</button>
+                </div>
+
+                <div class="reviews-container" id="reviews-list"></div>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════ BOOKINGS PAGE ═══════════════════════ -->
+    <div id="bookings-page" class="page hidden">
+        <div class="inner-page-hero">
+            <div class="iph-overlay"></div>
+            <div class="iph-content">
+                <p class="overline" style="color:rgba(212,175,55,0.8)">Your Journey</p>
+                <h1>My Trips</h1>
+                <p>Manage your upcoming and past adventures</p>
+            </div>
+        </div>
+        <div class="container">
+            <div id="bookings-list" class="bookings-container">
+                <div class="empty-state">
+                    <div class="es-icon">✦</div>
+                    <h3>No trips yet</h3>
+                    <p>Your adventure awaits. Start exploring destinations and book your first stay.</p>
+                    <button onclick="goToPage('home')" class="btn-gold">Start Exploring</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════ TRAVEL GUIDES PAGE ═══════════════════════ -->
+    <div id="guides-page" class="page hidden">
+        <div class="inner-page-hero" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600')">
+            <div class="iph-overlay"></div>
+            <div class="iph-content">
+                <p class="overline" style="color:rgba(212,175,55,0.8)">Curated Knowledge</p>
+                <h1>Travel Guides</h1>
+                <p>Expert insights, local secrets, and practical wisdom for every journey</p>
+            </div>
+        </div>
+
+        <div class="guides-content">
+            <!-- Featured Guide -->
+            <section class="guide-featured">
+                <div class="gf-inner">
+                    <div class="gf-img">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800" alt="Japan">
+                        <div class="gf-category">Featured Guide</div>
+                    </div>
+                    <div class="gf-text">
+                        <p class="overline">Japan · Spring 2025</p>
+                        <h2>The Ultimate First-Timer's Guide to Japan</h2>
+                        <p>Japan is unlike anywhere else on Earth. From the neon-lit chaos of Shinjuku to the meditative silence of a Kyoto temple garden at dawn, this island nation holds infinite wonders for the curious traveler. Whether you're chasing cherry blossoms in spring, autumn foliage in November, or the ethereal beauty of a snowy Hokkaido winter — Japan rewards every season of exploration.</p>
+                        <p>This guide covers everything you need for an unforgettable first visit: where to stay in Tokyo without overpaying, the train system demystified, the 12 dishes you must try, cultural etiquette to earn respect from locals, and the hidden temples the tour buses never find.</p>
+                        <div class="gf-meta">
+                            <span><i class="fas fa-clock"></i> 15 min read</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Japan</span>
+                            <span><i class="fas fa-tag"></i> Culture, Food, Adventure</span>
+                        </div>
+                        <button class="btn-gold">Read Full Guide <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide Categories -->
+            <section class="guide-categories">
+                <div class="section-header-luxury">
+                    <p class="overline">Browse By</p>
+                    <h2>Category</h2>
+                </div>
+                <div class="cat-grid">
+                    <div class="cat-card" style="background-image:url('https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=500')">
+                        <div class="cat-overlay"></div>
+                        <div class="cat-content">
+                            <i class="fas fa-utensils"></i>
+                            <h3>Food & Cuisine</h3>
+                            <span>24 Guides</span>
+                        </div>
+                    </div>
+                    <div class="cat-card" style="background-image:url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500')">
+                        <div class="cat-overlay"></div>
+                        <div class="cat-content">
+                            <i class="fas fa-hiking"></i>
+                            <h3>Adventure</h3>
+                            <span>18 Guides</span>
+                        </div>
+                    </div>
+                    <div class="cat-card" style="background-image:url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=500')">
+                        <div class="cat-overlay"></div>
+                        <div class="cat-content">
+                            <i class="fas fa-spa"></i>
+                            <h3>Luxury & Wellness</h3>
+                            <span>31 Guides</span>
+                        </div>
+                    </div>
+                    <div class="cat-card" style="background-image:url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=500')">
+                        <div class="cat-overlay"></div>
+                        <div class="cat-content">
+                            <i class="fas fa-users"></i>
+                            <h3>Family Travel</h3>
+                            <span>15 Guides</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide Grid -->
+            <section class="guide-grid-section">
+                <div class="section-header-luxury" style="text-align:left; margin-bottom:3rem">
+                    <p class="overline">Latest</p>
+                    <h2>Editorial Guides</h2>
+                </div>
+                <div class="guide-grid">
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600" alt="France">
+                            <div class="gc-tag">Europe</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 10 min · Culture & Food</p>
+                            <h3>Paris Beyond the Postcard: A Local's Guide</h3>
+                            <p>The city of light has hidden layers. Discover the arrondissements where Parisians actually eat, shop, and live — far from the tourist trail.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600" alt="India">
+                            <div class="gc-tag">Asia</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 12 min · Adventure</p>
+                            <h3>Rajasthan's Royal Palaces: A Weekend Circuit</h3>
+                            <p>From the pink city of Jaipur to the blue labyrinth of Jodhpur, India's desert kingdom dazzles at every turn.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600" alt="Italy">
+                            <div class="gc-tag">Europe</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 8 min · Food & Luxury</p>
+                            <h3>Amalfi Coast: The Perfect 7-Day Itinerary</h3>
+                            <p>Cliffside villages, turquoise waters, and the world's best limoncello. Here's how to drive, dine, and dive along this legendary coastline.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600" alt="Iceland">
+                            <div class="gc-tag">Europe</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 9 min · Adventure</p>
+                            <h3>Chasing Northern Lights: Iceland in Winter</h3>
+                            <p>The Aurora Borealis is nature's greatest show. We reveal the best viewing spots, timing, and how to photograph the sky ablaze.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73a0e?w=600" alt="Morocco">
+                            <div class="gc-tag">Africa</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 11 min · Culture</p>
+                            <h3>Marrakech: Navigating the Medina Like a Pro</h3>
+                            <p>Ancient souks, secret riads, and the world's most photogenic alleyways. Morocco's imperial city is a sensory feast beyond compare.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                    <article class="guide-card reveal">
+                        <div class="gc-img">
+                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600" alt="Bali">
+                            <div class="gc-tag">Asia</div>
+                        </div>
+                        <div class="gc-body">
+                            <p class="gc-meta"><i class="fas fa-clock"></i> 7 min · Wellness</p>
+                            <h3>Bali's Spiritual North: Ubud Beyond Instagram</h3>
+                            <p>Rice terraces, healer ceremonies, and jungle temples. Discover the soul of Bali that most travelers completely miss.</p>
+                            <button class="btn-text-link">Read Guide <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Travel Tips Strip -->
+            <section class="tips-section">
+                <div class="section-header-luxury">
+                    <p class="overline">Quick Tips</p>
+                    <h2>Traveler's Wisdom</h2>
+                </div>
+                <div class="tips-grid">
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-passport"></i></div>
+                        <h4>Documents First</h4>
+                        <p>Scan all your documents — passport, insurance, bookings — and email them to yourself before every trip.</p>
+                    </div>
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-sim-card"></i></div>
+                        <h4>Local SIM or eSIM</h4>
+                        <p>Buy a local SIM on arrival or set up an eSIM in advance. It's often 10x cheaper than roaming charges.</p>
+                    </div>
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-wallet"></i></div>
+                        <h4>Carry Mixed Currency</h4>
+                        <p>Always have some local cash, especially for markets, taxis, and smaller restaurants that don't accept cards.</p>
+                    </div>
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-cloud-sun"></i></div>
+                        <h4>Pack for the Season</h4>
+                        <p>Research the microclimate of your specific region — coastal vs. inland temperatures can differ dramatically.</p>
+                    </div>
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-language"></i></div>
+                        <h4>Learn 10 Words</h4>
+                        <p>Hello, thank you, please, sorry, and numbers 1–5 in the local language will open more doors than you imagine.</p>
+                    </div>
+                    <div class="tip-card reveal">
+                        <div class="tip-icon"><i class="fas fa-camera"></i></div>
+                        <h4>Unplug Sometimes</h4>
+                        <p>The best moments aren't always photographed. Put the phone down and let the experience wash over you fully.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer repeated for inner pages -->
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">◈ Voyageur</div>
+                    <p>Your trusted companion for<br>extraordinary journeys since 2024.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="footer-col">
+                        <h4>Navigate</h4>
+                        <a href="#" onclick="goToPage('home')">Home</a>
+                        <a href="#" onclick="goToPage('guides')">Travel Guides</a>
+                        <a href="#" onclick="goToPage('about')">About Us</a>
+                        <a href="#" onclick="goToPage('bookings')">My Trips</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Privacy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2024 Voyageur. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ═══════════════════════ ABOUT PAGE ═══════════════════════ -->
+    <div id="about-page" class="page hidden">
+        <div class="inner-page-hero" style="background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600')">
+            <div class="iph-overlay"></div>
+            <div class="iph-content">
+                <p class="overline" style="color:rgba(212,175,55,0.8)">Our Story</p>
+                <h1>About Voyageur</h1>
+                <p>Born from a passion for authentic travel experiences</p>
+            </div>
+        </div>
+
+        <div class="about-content">
+            <!-- Mission -->
+            <section class="about-mission">
+                <div class="am-grid">
+                    <div class="am-text">
+                        <p class="overline">Our Mission</p>
+                        <h2>We Exist to Make<br><em>Extraordinary</em><br>Travel Accessible</h2>
+                        <p>Voyageur was founded by a group of obsessive travelers who were tired of cookie-cutter tourism. We believe that travel is the greatest education — that experiencing different cultures, landscapes, and perspectives makes us more complete human beings.</p>
+                        <p>Our platform was built to remove the friction between the desire to explore and the actual act of exploring. We hand-curate every destination, every hotel, and every guide on this platform — because mediocrity has no place in travel.</p>
+                    </div>
+                    <div class="am-img">
+                        <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=700" alt="Mountains">
+                        <div class="am-img-overlay">
+                            <blockquote>"The world is a book, and those who do not travel read only one page."</blockquote>
+                            <cite>— Saint Augustine</cite>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Values -->
+            <section class="about-values">
+                <div class="section-header-luxury">
+                    <p class="overline">What We Stand For</p>
+                    <h2>Our Values</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card reveal">
+                        <div class="vc-num">I</div>
+                        <h3>Authenticity</h3>
+                        <p>We reject the artificial. Every recommendation is based on real visits, genuine experiences, and honest assessments by our travel team.</p>
+                    </div>
+                    <div class="value-card reveal">
+                        <div class="vc-num">II</div>
+                        <h3>Sustainability</h3>
+                        <p>We champion responsible travel that respects local communities, preserves natural wonders, and leaves destinations better than we found them.</p>
+                    </div>
+                    <div class="value-card reveal">
+                        <div class="vc-num">III</div>
+                        <h3>Excellence</h3>
+                        <p>From the hotels we list to the support we provide, we hold ourselves to the highest standards because your journey deserves nothing less.</p>
+                    </div>
+                    <div class="value-card reveal">
+                        <div class="vc-num">IV</div>
+                        <h3>Curiosity</h3>
+                        <p>The best travel experiences happen when you venture off the beaten path. We exist to help you find those moments of genuine discovery.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team -->
+            <section class="about-team">
+                <div class="section-header-luxury">
+                    <p class="overline">The People Behind Voyageur</p>
+                    <h2>Meet Our Team</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card reveal">
+                        <div class="tc-img">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=alexfounder&backgroundColor=b6e3f4" alt="Alex">
+                        </div>
+                        <h4>Alexandra Moreau</h4>
+                        <p class="tc-role">Founder & CEO</p>
+                        <p class="tc-bio">Former globetrotter who visited 78 countries before founding Voyageur. Her passion for authentic experiences drives everything we do.</p>
+                    </div>
+                    <div class="team-card reveal">
+                        <div class="tc-img">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=marcushead&backgroundColor=ffdfbf" alt="Marcus">
+                        </div>
+                        <h4>Marcus Tanaka</h4>
+                        <p class="tc-role">Head of Destinations</p>
+                        <p class="tc-bio">Travel journalist with bylines in Condé Nast and National Geographic. Marcus personally vets every destination on our platform.</p>
+                    </div>
+                    <div class="team-card reveal">
+                        <div class="tc-img">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=sophiades&backgroundColor=d1f4e0" alt="Sofia">
+                        </div>
+                        <h4>Sofia Reyes</h4>
+                        <p class="tc-role">Chief Experience Officer</p>
+                        <p class="tc-bio">Hospitality expert with 15 years in luxury hotel management across Europe and Asia. Sofia ensures our hotel recommendations are truly exceptional.</p>
+                    </div>
+                    <div class="team-card reveal">
+                        <div class="tc-img">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=davidtech&backgroundColor=ffd5dc" alt="David">
+                        </div>
+                        <h4>David Osei</h4>
+                        <p class="tc-role">Head of Technology</p>
+                        <p class="tc-bio">Engineer and travel enthusiast who built our platform from the ground up. David believes technology should make travel planning effortless.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="about-numbers">
+                <div class="numbers-inner">
+                    <div class="num-item reveal">
+                        <span class="ni-num">20<sup>+</sup></span>
+                        <span class="ni-label">Countries Covered</span>
+                    </div>
+                    <div class="num-item reveal">
+                        <span class="ni-num">500<sup>+</sup></span>
+                        <span class="ni-label">Hotels Listed</span>
+                    </div>
+                    <div class="num-item reveal">
+                        <span class="ni-num">50K<sup>+</sup></span>
+                        <span class="ni-label">Happy Travelers</span>
+                    </div>
+                    <div class="num-item reveal">
+                        <span class="ni-num">98%</span>
+                        <span class="ni-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Press -->
+            <section class="about-press">
+                <div class="section-header-luxury">
+                    <p class="overline">Featured In</p>
+                    <h2>Press & Recognition</h2>
+                </div>
+                <div class="press-grid">
+                    <div class="press-item reveal">
+                        <div class="press-logo">Condé Nast<br><em>Traveler</em></div>
+                        <p>"Best New Travel Platform of 2024"</p>
+                    </div>
+                    <div class="press-item reveal">
+                        <div class="press-logo">Forbes</div>
+                        <p>"Top 10 Travel Startups to Watch"</p>
+                    </div>
+                    <div class="press-item reveal">
+                        <div class="press-logo">National<br><em>Geographic</em></div>
+                        <p>"Redefining How We Discover the World"</p>
+                    </div>
+                    <div class="press-item reveal">
+                        <div class="press-logo">Travel +<br><em>Leisure</em></div>
+                        <p>"The Platform Every Traveler Needs"</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="about-cta">
+                <div class="acta-inner">
+                    <h2>Ready to Begin<br>Your Journey?</h2>
+                    <p>Join thousands of discerning travelers who trust Voyageur to make every trip extraordinary.</p>
+                    <div class="acta-btns">
+                        <button onclick="goToPage('home'); setTimeout(scrollToMap, 300)" class="btn-gold">Explore Destinations</button>
+                        <button onclick="goToPage('guides')" class="btn-ghost">Read Travel Guides</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo">◈ Voyageur</div>
+                    <p>Your trusted companion for<br>extraordinary journeys since 2024.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="footer-col">
+                        <h4>Navigate</h4>
+                        <a href="#" onclick="goToPage('home')">Home</a>
+                        <a href="#" onclick="goToPage('guides')">Travel Guides</a>
+                        <a href="#" onclick="goToPage('about')">About Us</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Privacy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2024 Voyageur. All rights reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ═══════════════════════ BOOKING MODAL ═══════════════════════ -->
+    <div id="booking-modal" class="modal hidden">
+        <div class="modal-box">
+            <button onclick="closeModal()" class="modal-close"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <p class="overline">Reserve Your Stay</p>
+                <h2>Book Hotel</h2>
+                <p id="modal-hotel-name">Hotel Name</p>
+            </div>
+            <form onsubmit="saveBooking(event)" class="booking-form">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Check-in</label>
+                        <input type="date" id="checkin-date" required onchange="calculateTotal()">
+                    </div>
+                    <div class="form-field">
+                        <label>Check-out</label>
+                        <input type="date" id="checkout-date" required onchange="calculateTotal()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Guests</label>
+                        <select id="adults-count" onchange="calculateTotal()">
+                            <option value="1">1 Adult</option>
+                            <option value="2" selected>2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Room Type</label>
+                        <select id="room-type" onchange="calculateTotal()">
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room (+50%)</option>
+                            <option value="suite">Suite (+100%)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="price-box">
+                    <div class="price-row"><span>Nights:</span><span id="nights-count">0</span></div>
+                    <div class="price-row"><span>Price per night:</span><span>$<span id="price-per-night">0</span></span></div>
+                    <div class="price-row total"><span>Total:</span><span class="total-price">$<span id="total-price">0</span></span></div>
+                </div>
+                <button type="submit" class="btn-gold" style="width:100%;justify-content:center">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-box auth-box">
+            <button onclick="closeAuthModal()" class="modal-close"><i class="fas fa-times"></i></button>
+            <div class="auth-tabs">
+                <button onclick="switchAuthTab('login')" class="auth-tab active" id="login-tab">Sign In</button>
+                <button onclick="switchAuthTab('register')" class="auth-tab" id="register-tab">Join Us</button>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)" class="auth-form">
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="login-email" required placeholder="your@email.com">
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-gold" style="width:100%;justify-content:center">Sign In</button>
+                <p class="auth-hint">New here? <a href="#" onclick="switchAuthTab('register')">Create an account</a></p>
+            </form>
+            <form id="register-form" onsubmit="handleRegister(event)" class="auth-form hidden">
+                <div class="form-field">
+                    <label>Full Name</label>
+                    <input type="text" id="register-name" required placeholder="Your Name">
+                </div>
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="register-email" required placeholder="your@email.com">
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-field">
+                    <label>Confirm Password</label>
+                    <input type="password" id="register-confirm" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-gold" style="width:100%;justify-content:center">Create Account</button>
+                <p class="auth-hint">Already a member? <a href="#" onclick="switchAuthTab('login')">Sign in</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="data.js"></script>
+    <script src="map.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
